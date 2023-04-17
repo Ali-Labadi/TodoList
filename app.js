@@ -15,45 +15,31 @@ const ul = document.querySelector("ul")
 
 todoObjs = {}
 
-addBtn.addEventListener("click", function() {
-    const todoInputValue = todoInput.value
-    const nextKey = Object.keys(todoObjs).length + 1 // generate next key
-    todoObjs[nextKey] = todoInputValue // add new key-value pair to object
-    todoInput.value = "" // clear the input after adding
-    showItmes() // showing todo items in html with function
+addBtn.addEventListener("click", () => {
+    addItem()
+    showItems()
 })
 
-// function showItmes() {
-//     ul.innerHTML = "" // clearing html before adding to the list
-//     const keys = Object.keys(todoObjs);
-//     for (let key in todoObjs) { // showing the todoObjs in html
-//         const key = keys[i];
-//         const li = document.createElement('li')
-//         li.innerHTML = `${todoObjs[key]} <button class="delete-btn"><span class="material-symbols-outlined">
-//         delete
-//         </span></button>`
-//         ul.append(li)
-//         li.querySelector(".delete-btn").addEventListener("click", function() {
-//             delete todoObjs[key] // delete the object key-value pair
-//             appendTodoObjsToUl() // refresh the todo items in html
-//         })
-//     }
-// }
+function addItem() {
+    const todoInputValue = todoInput.value
+    const timestamp = Date.now() // generate unique timestamp
+    todoObjs[timestamp] = todoInputValue // use timestamp as key in object
+    todoInput.value = "" // clear the input after adding
+}
 
-
-function showItmes() {
-    ul.innerHTML = "" // clearing html before adding to the list
+function showItems() {
+    ul.innerHTML = "" // clearing html before showing the list
     const keys = Object.keys(todoObjs); // get the object's keys
     for (let i = 0; i < keys.length; i++) { // iterate over the keys
-        const key = keys[i];
+        const key = keys[i]
         const li = document.createElement('li')
         li.innerHTML = `${todoObjs[key]} <button class="delete-btn"><span class="material-symbols-outlined">
         delete
         </span></button>`
         ul.append(li)
-        li.querySelector(".delete-btn").addEventListener("click", function() {
+        li.querySelector(".delete-btn").addEventListener("click", () => {
             delete todoObjs[key] // delete the object key-value pair
-            showItmes() // refresh the todo items in html
+            showItems() // refresh the todo items in html
         })
     }
 }
